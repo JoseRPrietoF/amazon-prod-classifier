@@ -1,0 +1,42 @@
+# Dockerfile.etl-train
+FROM continuumio/miniconda3:latest
+
+# RUN add-apt-repository ppa:openjdk-r/ppa
+# Install OpenJDK required for PySpark
+RUN apt-get update && \
+  apt-get install -y openjdk-17-jdk-headless build-essential bash coreutils curl netcat-traditional --no-install-recommends && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
+
+# Install OpenJDK required for PySpark
+# Set JAVA_HOME
+ENV JAVA_HOME /usr/lib/jvm/java-1.17.0-openjdk-amd64
+
+
+# Set working directory
+WORKDIR /app
+# Copy the wait-for-it script
+COPY src/dockers/wait-for-it.sh /usr/local/bin/wait-for-it
+RUN chmod +x /usr/local/bin/wait-for-it
+
+# Copy and install requirements
+COPY environment.yaml .
+RUN conda env create -f environment.yaml --name training
+
+# Copy the source code
+COPY . /app/
+
+# Make RUN commands use the conda environment:
+SHELL ["conda", "run", "-n", "training", "/bin/bash", "-c"]
+
+
+ENV NVIDIA_VISIBLE_DEVICES=all
+ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
+
+
+# Expose Streamlit port
+EXPOSE 8501
+
+# Run Streamlit
+# CMD ["wait-for-it", "api:8000", "--", "conda", "run", "--no-capture-output", "-n", "training", " streamlit", "run", "src/streamlit_app/app.py", "--server.port", "8501", "--server.address", "0.0.0.0"]
+CMD ["conda", "run", "--no-capture-output", "-n", "training", "streamlit", "run", "src/streamlit_app/app.py", "--server.port", "8501", "--server.address", "0.0.0.0"]

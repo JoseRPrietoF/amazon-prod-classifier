@@ -1,0 +1,34 @@
+version: '3.8'
+
+networks:
+  classif_network:
+    name: classif_network  # Nombre personalizado de la red
+    driver: bridge
+
+services:
+  api:
+    build:
+        context: ../..
+        dockerfile: src/dockers/Dockerfile.api
+    container_name: api
+    networks:
+      - classif_network
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../../:/app
+  web:
+    build:
+      context: ../..
+      dockerfile: src/dockers/Dockerfile.web
+    container_name: web
+    networks:
+      - classif_network
+    depends_on:
+      - api
+    ports:
+      - "8501:8501"
+    volumes:
+      - ../../:/app
+    environment:
+      - API_HOST=http://api:8000

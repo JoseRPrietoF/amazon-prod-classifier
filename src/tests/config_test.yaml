@@ -1,0 +1,11 @@
+etl_pipeline:
+  input_path: "amz_products_small.jsonl.gz"
+  output_path: "./data/processed/amz_products_small_processed_bert_tiny_v1.parquet/"
+  data_fraction: 1.0
+  seed: 42
+  tokenizer_model: "prajjwal1/bert-tiny"
+  label_column: "main_cat"
+  text_columns: ["asin", "title", "description", "feature", "brand"]
+
+tokenizer:
+  max_length: 512

@@ -1,0 +1,15 @@
+MLFLOW_RUN_ID: 34ce96101034455fbfd2239d316414c4
+MLFLOW_TRACKING_URI: file:mlruns
+MLFLOW_EXPERIMENT_NAME: /product_classif
+MAX_LENGTH: 512
+DATA_PATH_EXAMPLE: corpus.jsonl.gz
+FRACTION_DATA: 0.005
+SEED: 7
+ProductDescription:
+  asin: str
+  brand: str
+  description: list[str]
+  feature: list[str]
+  image: list[str]
+  price: str
+  title: str

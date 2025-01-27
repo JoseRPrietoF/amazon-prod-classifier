@@ -1,0 +1,15 @@
+input_data_path: 'data/processed/amz_products_small_processed_modern_bert_v1.parquet'
+input_data_encoded: True
+data_load: 'distributed'
+trainable_layers: None
+bert_model_name: "answerdotai/ModernBERT-base"
+num_epochs: 2
+batch_size: 16
+test_batch_size: 16
+learning_rate: 1e-5
+# learning_rate: 3e-4
+optimizer: "AdamW"
+device: "cuda"
+seed: 42
+data_fraction: 1
+max_length: 512

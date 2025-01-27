@@ -1,0 +1,13 @@
+input_data_path: 'data/processed/corpus_processed_bert_tiny.parquet'
+input_data_encoded: True
+data_load: 'distributed'
+trainable_layers: None
+bert_model_name: "prajjwal1/bert-tiny"
+num_epochs: 1
+batch_size: 256
+test_batch_size: 256
+learning_rate: 3e-4
+optimizer: "AdamW"
+device: "cuda"
+seed: 7
+data_fraction: 1
