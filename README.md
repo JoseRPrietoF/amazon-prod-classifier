@@ -6,6 +6,7 @@
   - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Features](#features)
+  - [Application Diagram](#application-diagram)
   - [Dataset](#dataset)
     - [Fields Explanation](#fields-explanation)
   - [Configuration](#configuration)
@@ -34,6 +35,21 @@ This repository provides an end-to-end solution for classifying Amazon products 
 - **REST API**: Serves predictions via a FastAPI application.
 - **Web Interface**: Provides an intuitive web interface built with Streamlit.
 - **Dockerized Workflow**: Supports containerized execution for reproducibility.
+
+## Application Diagram
+
+Below is a visual representation of the application's architecture:
+
+```mermaid
+flowchart TD
+    A[Download Dataset] --> B[ETL Pipeline]
+    B --> C[PySpark]
+    C --> D[Train Model]
+    D --> E[MLflow]
+    F[API] --> E
+    F --> C
+    G[Web Interface] --> F
+```
 
 ## Dataset
 
